@@ -468,7 +468,9 @@ static php_stream *php_ssh2_shell_open(LIBSSH2_SESSION *session, int resource_id
 
 	channel = libssh2_channel_open_session(session);
 	if (!channel) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Unable to request a channel from remote host");
+		char *error = "";
+		libssh2_session_last_error(session, &error, NULL, 0);
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Unable to request a channel from remote host: %s", error);
 		return NULL;
 	}
 
@@ -712,7 +714,9 @@ static php_stream *php_ssh2_exec_command(LIBSSH2_SESSION *session, int resource_
 
 	channel = libssh2_channel_open_session(session);
 	if (!channel) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Unable to request a channel from remote host");
+		char *error = "";
+		libssh2_session_last_error(session, &error, NULL, 0);
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Unable to request a channel from remote host: %s", error);
 		return NULL;
 	}
 
