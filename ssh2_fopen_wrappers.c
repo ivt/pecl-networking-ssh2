@@ -466,6 +466,7 @@ static php_stream *php_ssh2_shell_open(LIBSSH2_SESSION *session, int resource_id
 	php_ssh2_channel_data *channel_data;
 	php_stream *stream;
 
+	libssh2_session_set_blocking(session, 1);
 	channel = libssh2_channel_open_session(session);
 	if (!channel) {
 		char *error = "";
@@ -712,6 +713,7 @@ static php_stream *php_ssh2_exec_command(LIBSSH2_SESSION *session, int resource_
 	php_ssh2_channel_data *channel_data;
 	php_stream *stream;
 
+	libssh2_session_set_blocking(session, 1);
 	channel = libssh2_channel_open_session(session);
 	if (!channel) {
 		char *error = "";
