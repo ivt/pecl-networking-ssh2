@@ -51,6 +51,7 @@ static size_t php_ssh2_channel_stream_write(php_stream *stream, const char *buf,
 		libssh2_session_set_timeout(session, 0);
 	}
 #endif
+	libssh2_channel_set_blocking(abstract->channel, 1);
 	if (writestate == LIBSSH2_ERROR_EAGAIN) {
 		writestate = 0;
 	}
@@ -91,6 +92,7 @@ static size_t php_ssh2_channel_stream_read(php_stream *stream, char *buf, size_t
 		libssh2_session_set_timeout(session, 0);
 	}
 #endif
+	libssh2_channel_set_blocking(abstract->channel, 1);
 	if (readstate == LIBSSH2_ERROR_EAGAIN) {
 		readstate = 0;
 	}
